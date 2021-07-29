@@ -36,127 +36,111 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.deleteCategory = exports.editCategory = exports.getCategory = exports.getCategories = exports.createCategory = void 0;
-var category_1 = require("../../data/models/category");
-var createCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name, icon, image, description, Category, err_1;
+exports.getRating = exports.getRatings = exports.agentRating = exports.createRating = void 0;
+var rating_1 = require("../../data/models/rating");
+var agent_1 = require("../../data/models/agent");
+var createRating = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, requestId, customerRatingLevel, customerRemark, Rating, err_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _a = req.body, name = _a.name, icon = _a.icon, image = _a.image, description = _a.description;
+                _a = _req.body, requestId = _a.requestId, customerRatingLevel = _a.customerRatingLevel, customerRemark = _a.customerRemark;
                 _b.label = 1;
             case 1:
                 _b.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, category_1["default"].create({ name: name, icon: icon, image: image, description: description })];
+                return [4 /*yield*/, rating_1["default"].create({ requestId: requestId, customerRatingLevel: customerRatingLevel, customerRemark: customerRemark })];
             case 2:
-                Category = _b.sent();
-                res.json(Category);
+                Rating = _b.sent();
+                res.json(Rating);
                 return [3 /*break*/, 4];
             case 3:
                 err_1 = _b.sent();
                 console.log(err_1);
-                res.end();
+                res.status(400).json(err_1.message);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); };
-exports.createCategory = createCategory;
-var getCategories = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var Categories, err_2;
+exports.createRating = createRating;
+var agentRating = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, _a, agentRatingLevel, agentRemark, agentId, agent, Rating, err_2;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                id = _req.params.id;
+                _a = _req.body, agentRatingLevel = _a.agentRatingLevel, agentRemark = _a.agentRemark, agentId = _a.agentId;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 6, , 7]);
+                return [4 /*yield*/, agent_1["default"].findById(agentId)];
+            case 2:
+                agent = _b.sent();
+                if (!agent) return [3 /*break*/, 5];
+                return [4 /*yield*/, rating_1["default"].findById(id)];
+            case 3:
+                Rating = _b.sent();
+                return [4 /*yield*/, Rating.update({ agentRatingLevel: agentRatingLevel, agentRemark: agentRemark })];
+            case 4:
+                _b.sent();
+                res.json(Rating);
+                _b.label = 5;
+            case 5:
+                res.status(400).json({ message: 'no agent with that id' });
+                return [3 /*break*/, 7];
+            case 6:
+                err_2 = _b.sent();
+                console.log(err_2);
+                res.status(400).json(err_2.message);
+                return [3 /*break*/, 7];
+            case 7: return [2 /*return*/];
+        }
+    });
+}); };
+exports.agentRating = agentRating;
+var getRatings = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var ratings, err_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, category_1["default"].find({})];
+                return [4 /*yield*/, rating_1["default"].find({})];
             case 1:
-                Categories = _a.sent();
-                res.json(Categories);
+                ratings = _a.sent();
+                res.json(ratings);
                 return [3 /*break*/, 3];
             case 2:
-                err_2 = _a.sent();
-                console.log(err_2);
-                res.end();
+                err_3 = _a.sent();
+                console.log(err_3);
+                res.status(400).json(err_3.message);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
-exports.getCategories = getCategories;
-var getCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, Category, err_3;
+exports.getRatings = getRatings;
+var getRating = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, rating, err_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                id = req.params.id;
+                id = _req.params.id;
+                console.log(id);
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, category_1["default"].findById(id)];
+                return [4 /*yield*/, rating_1["default"].findById(id)];
             case 2:
-                Category = _a.sent();
-                res.json(Category);
+                rating = _a.sent();
+                res.json(rating);
                 return [3 /*break*/, 4];
             case 3:
-                err_3 = _a.sent();
-                console.log(err_3);
-                res.end();
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-exports.getCategory = getCategory;
-var editCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, name, icon, image, description, _id, Category, err_4;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _a = req.body, name = _a.name, icon = _a.icon, image = _a.image, description = _a.description;
-                _id = req.params._id;
-                _b.label = 1;
-            case 1:
-                _b.trys.push([1, 4, , 5]);
-                return [4 /*yield*/, category_1["default"].updateOne({ _id: _id }, { name: name, icon: icon, image: image, description: description })];
-            case 2:
-                _b.sent();
-                return [4 /*yield*/, category_1["default"].findById(_id)];
-            case 3:
-                Category = _b.sent();
-                res.json(Category);
-                return [3 /*break*/, 5];
-            case 4:
-                err_4 = _b.sent();
+                err_4 = _a.sent();
                 console.log(err_4);
-                res.end();
-                return [3 /*break*/, 5];
-            case 5: return [2 /*return*/];
-        }
-    });
-}); };
-exports.editCategory = editCategory;
-var deleteCategory = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, message, err_5;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                id = req.params.id;
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, category_1["default"].deleteOne({ _id: id })];
-            case 2:
-                _a.sent();
-                message = "Category Deleted Successfully";
-                res.json({ message: message });
-                return [3 /*break*/, 4];
-            case 3:
-                err_5 = _a.sent();
-                console.log(err_5);
-                res.end();
+                res.status(400).json(err_4.message);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); };
-exports.deleteCategory = deleteCategory;
+exports.getRating = getRating;

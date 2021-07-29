@@ -86,4 +86,32 @@ export interface AdminModel extends Model<IAdmin>{
   login(username: string, password: string): Promise<IAdmin>
 }
 
+export interface IRequest extends Document {
+  _id: ObjectID
+  serviceId: string
+  customerId: string
+  agentId: string
+  scheduledTime: Date
+  type: string
+  requestTime: Date
+  status: string
+  description: string
+  images: string[]
+}
+
+export interface RequestModel extends Model<IRequest> {
+
+}
+
+export interface IRating extends Document {
+  _id: ObjectID
+  requestId: string
+  cutomerRatingLevel: string
+  agentRatingLevel: string
+  customerRemark: string
+  adminRemark: string
+}
+
+export interface RatingModel extends Model<IRating>{}
+
 export { userInterface, userModel, profileEdit }

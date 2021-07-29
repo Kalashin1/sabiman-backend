@@ -20,6 +20,8 @@ import { router as AgentRouter } from './router/agent-router'
 // * ADMIN ROUTER
 import { router as AdminRouter} from './router/admin-router'
 
+import RequestRouter from './router/request'
+
 // CREATING OUR SEVER APP WITH EXPRESS
 const app = express()
 // OUR APP WILL RUN ON THE PORT GIVEN BELOW
@@ -53,6 +55,8 @@ app.use(ServiceRouter)
 app.use(AgentRouter)
 // ADMIN ROUTER
 app.use(AdminRouter)
+
+app.use(RequestRouter)
 // routes
 
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})

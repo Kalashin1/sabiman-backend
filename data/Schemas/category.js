@@ -1,7 +1,7 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
-const CategorySchema = new mongoose_1.Schema({
+exports.__esModule = true;
+var mongoose_1 = require("mongoose");
+var CategorySchema = new mongoose_1.Schema({
     name: {
         type: String,
         required: [true, 'Please provide a name for the category.'],
@@ -18,6 +18,6 @@ const CategorySchema = new mongoose_1.Schema({
     image: {
         type: String,
         required: [true, 'Please Provide an image for the category.']
-    },
+    }
 });
-exports.default = CategorySchema;
+exports["default"] = CategorySchema;

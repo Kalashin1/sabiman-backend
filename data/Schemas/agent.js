@@ -1,8 +1,8 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
-const validator_1 = require("../validators/validator");
-const AgentSchema = new mongoose_1.Schema({
+exports.__esModule = true;
+var mongoose_1 = require("mongoose");
+var validator_1 = require("../validators/validator");
+var AgentSchema = new mongoose_1.Schema({
     name: {
         type: String,
         required: [true, 'Please provide your name.'],
@@ -46,13 +46,13 @@ const AgentSchema = new mongoose_1.Schema({
     },
     regDate: {
         type: Date,
-        default: () => new Date()
+        "default": function () { return new Date(); }
     },
     taxNumber: {
         type: String
     },
     logo: {
-        type: String,
-    },
+        type: String
+    }
 });
-exports.default = AgentSchema;
+exports["default"] = AgentSchema;
