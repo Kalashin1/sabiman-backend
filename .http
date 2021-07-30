@@ -1,0 +1,31 @@
+PUT http://localhost:5000/request/6102ab6ed0d1e525e043133e/610145bd423c1e14fcfe6d4b
+###
+POST http://localhost:5000/resetpassword/user/60fed1d6ef71161a2cc1c29c
+Content-Type: application/json
+
+{
+  "oldPassword": "Test1234",
+  "newPassword": "123456"
+}
+###
+POST http://localhost:5000/changestatus/user/60fed1d6ef71161a2cc1c29c/blocked
+###
+PATCH http://localhost:5000/agent/resetpassword/610145bd423c1e14fcfe6d4b
+Content-Type: application/json
+
+{
+  "oldPassword": "123456",
+  "newPassword": "Test1234"
+}
+###
+PATCH http://localhost:5000/agent/changestatus/610145bd423c1e14fcfe6d4b/blocked
+###
+POST http://localhost:5000/admin/resetpassword/6101721a9d2de41abc155237
+Content-Type: application/json
+
+{
+  "oldPassword": "Test1234",
+  "newPassword": "123456"
+}
+###
+GET http://localhost:5000/admin
