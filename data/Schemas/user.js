@@ -29,6 +29,10 @@ var userSchema = new mongoose.Schema({
     state: {
         type: String
     },
+    status: {
+        type: String,
+        "default": 'active'
+    },
     isAdmin: {
         type: Boolean,
         "default": false

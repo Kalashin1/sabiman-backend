@@ -73,3 +73,5 @@ router.get('/', function (_req, res) {
     res.json({ message: 'connected' });
 });
 router.post('/dashboard/profile', user_1.editProfile);
+router.post('/resetpassword/user/:id', user_1.resetPassword);
+router.post('/changestatus/user/:id/:status', user_1.changeAccountStatus);

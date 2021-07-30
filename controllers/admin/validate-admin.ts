@@ -1,57 +1,54 @@
 import * as jwt from 'jsonwebtoken'
 
-import express from 'express'
+import { Request, Response } from 'express'
 
-import userModel from '../../data/models/user';
-
-
+import AdminModel from '../../data/models/admin';
 
 
-const validateUser = (req: express.Request, res: express.Response, next: Function) => {
-  const token:string = req.cookies.jwt
-  if(token){
+export const validateAgent = (req: Request, res: Response, next: Function) => {
+  const token: string = req.cookies.admin
+  if (token) {
     jwt.verify(token, 'my secrete key', (err, _decodedToken) => {
-      if(err){
+      if (err) {
         // console.log(err.message)
         res.status(400).json(err.message)
       }
-      else{
+      else {
         // console.log(decodedToken)
         next()
       }
     })
   }
-  else{
+  else {
     // console.log('no cookie')
     res.status(400).json('you are not logged in')
   }
 }
 
-const getUser = (req: express.Request, res: express.Response) => {
-  const token = req.cookies.jwt
+export const getAdmin = (req: Request, res: Response) => {
+  const token = req.cookies.admin
   console.log()
 
   if (token) {
     jwt.verify(token, 'my secrete key', async (err, decodedToken) => {
-      if(err){
+      if (err) {
         console.log(decodedToken.id);
       }
-      else{
+      else {
         // console.log(decodedToken)
 
-        const user = await userModel.findById(decodedToken.id)
+        const Admin = await AdminModel.findById(decodedToken.id)
 
-        console.log(user)
+        console.log(Admin)
 
-        res.json(user)
+        res.json(Admin)
 
       }
     })
   }
-  else{
+  else {
     // console.log('no cookie')
     res.status(400).json('you are not logged in')
   }
 }
 
-export { validateUser, getUser}

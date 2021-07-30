@@ -10,21 +10,25 @@ interface profileEdit {
   country?: string
 }
 
+export type accountStatus = 'active' | 'blocked'
 
 interface userInterface extends Document{
-  name: string,
-  email: string,
-  phoneNumber: string,
-  password: string,
-  displayImage: string,
-  country: string,
-  state: string,
+  name: string
+  email: string
+  phoneNumber: string
+  password: string
+  displayImage: string
+  country: string
+  state: string
+  status: string
   isAdmin: boolean
+  resetPassword(oldPassword: string, newPassword: string): Promise<boolean>
+  changeAccountStatus(status: accountStatus): Promise<userInterface>
 }
 
 interface userModel extends Model<userInterface>{
   login(phoneNumber:string, password: string): Promise<userInterface>,
-  editProfile(id: string, obj: profileEdit): userInterface
+  editProfile(id: string, obj: profileEdit): Promise<userInterface>
 }
 
 
@@ -71,6 +75,8 @@ export interface IAgent extends Document {
   removeService(serviceId: string): Promise<string[]>
   updateBankInfo(Obj: any): Promise<IAgent>
   updateBusinessInfo(obj: any): Promise<IAgent>
+  resetPassword(oldPassword: string, newPassword: string): Promise<boolean>
+  changeAccountStatus(status: accountStatus): Promise<IAgent>
 }
 
 export interface AgentModel extends Model<IAgent>{
@@ -80,6 +86,7 @@ export interface AgentModel extends Model<IAgent>{
 export interface IAdmin extends Document {
   username: string
   password: string
+  resetPassword(oldPassword: string, newPassword: string): Promise<boolean>
 }
 
 export interface AdminModel extends Model<IAdmin>{

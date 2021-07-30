@@ -68,3 +68,19 @@ export const logoutAdmin = async (req: Request, res: Response) => {
     res.json({ message: 'you are not logged in' }) // notify the Admin that they are not logged in
   }
 }
+
+export const resetPassword = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const { oldPassword, newPassword } = req.body
+  try {
+    const Admin = await AdminModel.findById(id)
+    const result = await Admin.resetPassword(oldPassword, newPassword)
+    if (result) {
+      res.json(Admin)
+    }
+    res.status(400).json({ message: "old password is incorrect" })
+  } catch (err) {
+    console.log(err)
+    res.status(400).json(err.message)
+  }
+}

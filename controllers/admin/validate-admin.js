@@ -36,11 +36,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getUser = exports.validateUser = void 0;
+exports.getAdmin = exports.validateAgent = void 0;
 var jwt = require("jsonwebtoken");
-var user_1 = require("../../data/models/user");
-var validateUser = function (req, res, next) {
-    var token = req.cookies.jwt;
+var admin_1 = require("../../data/models/admin");
+var validateAgent = function (req, res, next) {
+    var token = req.cookies.admin;
     if (token) {
         jwt.verify(token, 'my secrete key', function (err, _decodedToken) {
             if (err) {
@@ -58,24 +58,24 @@ var validateUser = function (req, res, next) {
         res.status(400).json('you are not logged in');
     }
 };
-exports.validateUser = validateUser;
-var getUser = function (req, res) {
-    var token = req.cookies.jwt;
+exports.validateAgent = validateAgent;
+var getAdmin = function (req, res) {
+    var token = req.cookies.admin;
     console.log();
     if (token) {
         jwt.verify(token, 'my secrete key', function (err, decodedToken) { return __awaiter(void 0, void 0, void 0, function () {
-            var user;
+            var Admin;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!err) return [3 /*break*/, 1];
                         console.log(decodedToken.id);
                         return [3 /*break*/, 3];
-                    case 1: return [4 /*yield*/, user_1["default"].findById(decodedToken.id)];
+                    case 1: return [4 /*yield*/, admin_1["default"].findById(decodedToken.id)];
                     case 2:
-                        user = _a.sent();
-                        console.log(user);
-                        res.json(user);
+                        Admin = _a.sent();
+                        console.log(Admin);
+                        res.json(Admin);
                         _a.label = 3;
                     case 3: return [2 /*return*/];
                 }
@@ -87,4 +87,4 @@ var getUser = function (req, res) {
         res.status(400).json('you are not logged in');
     }
 };
-exports.getUser = getUser;
+exports.getAdmin = getAdmin;

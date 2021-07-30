@@ -54,7 +54,19 @@ export const editRequest = async (_req: Request, res: Response) => {
     await Request.updateOne({ type, status })
     let message = "Request Updated successfully"
     res.json({message})
-    res.json(Request)
+  } catch (err) {
+    console.log(err)
+    res.status(400).json(err.message)
+  }
+}
+
+export const assignAgent = async (_req: Request, res: Response) => {
+  const { id, agentId } = _req.params
+  try {
+    const Request = await Requests.findById(id)
+    await Request.updateOne({ agentId })
+    let message = "Request Updated successfully"
+    res.json({ message })
   } catch (err) {
     console.log(err)
     res.status(400).json(err.message)

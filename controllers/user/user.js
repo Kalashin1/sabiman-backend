@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.editProfile = void 0;
+exports.editProfile = exports.changeAccountStatus = exports.resetPassword = void 0;
 var user_1 = require("../../data/models/user");
 // edit the users info
 var editProfile = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -54,3 +54,61 @@ var editProfile = function (req, res) { return __awaiter(void 0, void 0, void 0,
     });
 }); };
 exports.editProfile = editProfile;
+var resetPassword = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, _a, oldPassword, newPassword, user, result, err_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                id = _req.params.id;
+                _a = _req.body, oldPassword = _a.oldPassword, newPassword = _a.newPassword;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, user_1["default"].findById(id)];
+            case 2:
+                user = _b.sent();
+                return [4 /*yield*/, user.resetPassword(oldPassword, newPassword)];
+            case 3:
+                result = _b.sent();
+                if (result) {
+                    res.json(user);
+                }
+                res.status(400).json({ message: "old password is incorrect" });
+                return [3 /*break*/, 5];
+            case 4:
+                err_1 = _b.sent();
+                console.log(err_1);
+                res.status(400).json(err_1);
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+exports.resetPassword = resetPassword;
+var changeAccountStatus = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, id, status, user, err_2;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = _req.params, id = _a.id, status = _a.status;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, user_1["default"].findById(id)];
+            case 2:
+                user = _b.sent();
+                return [4 /*yield*/, user.changeAccountStatus(status)];
+            case 3:
+                _b.sent();
+                res.json({ message: "status updated successfully" });
+                return [3 /*break*/, 5];
+            case 4:
+                err_2 = _b.sent();
+                console.log(err_2);
+                res.status(400).json(err_2);
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+exports.changeAccountStatus = changeAccountStatus;

@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.logoutAdmin = exports.loginAdminWithUsernameAndPassword = exports.createAdminWithUsernameAndPassword = void 0;
+exports.resetPassword = exports.logoutAdmin = exports.loginAdminWithUsernameAndPassword = exports.createAdminWithUsernameAndPassword = void 0;
 var admin_1 = require("../../data/models/admin");
 var jwt_handler_1 = require("../helper/jwt-handler");
 // CREATING A NEW Admin
@@ -112,3 +112,34 @@ var logoutAdmin = function (req, res) { return __awaiter(void 0, void 0, void 0,
     });
 }); };
 exports.logoutAdmin = logoutAdmin;
+var resetPassword = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, _a, oldPassword, newPassword, Admin, result, err_3;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                id = req.params.id;
+                _a = req.body, oldPassword = _a.oldPassword, newPassword = _a.newPassword;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, admin_1["default"].findById(id)];
+            case 2:
+                Admin = _b.sent();
+                return [4 /*yield*/, Admin.resetPassword(oldPassword, newPassword)];
+            case 3:
+                result = _b.sent();
+                if (result) {
+                    res.json(Admin);
+                }
+                res.status(400).json({ message: "old password is incorrect" });
+                return [3 /*break*/, 5];
+            case 4:
+                err_3 = _b.sent();
+                console.log(err_3);
+                res.status(400).json(err_3.message);
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+exports.resetPassword = resetPassword;

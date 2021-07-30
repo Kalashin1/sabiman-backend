@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import AgentModel from '../../data/models/agent'
+import { accountStatus } from '../helper/interface';
 
 export const AddService = async (req: Request, res: Response) => {
   const { id, serviceId } = req.params
@@ -54,4 +55,38 @@ export const updateBusinessInfo = async (req: Request, res: Response) => {
     res.status(400).json(err.message)
   }
 
+}
+
+type requestParams = {
+  id: string
+  status: accountStatus
+}
+
+
+export const changeAccountStatus = async (_req: Request<requestParams>, res: Response) => {
+  const { id, status } = _req.params
+  try {
+    const Agent = await AgentModel.findById(id)
+    await Agent.changeAccountStatus(status)
+    res.json({ message: "status updated successfully" })
+  } catch (err) {
+    console.log(err)
+    res.status(400).json(err)
+  }
+}
+
+export const resetPassword = async (_req: Request, res: Response) => {
+  const { id } = _req.params
+  const { oldPassword, newPassword } = _req.body
+  try {
+    const Agent = await AgentModel.findById(id)
+    const result = await Agent.resetPassword(oldPassword, newPassword)
+    if (result) {
+      res.json(Agent)
+    }
+    res.status(400).json({ message: "old password is incorrect" })
+  } catch (err) {
+    console.log(err)
+    res.status(400).json(err)
+  }
 }

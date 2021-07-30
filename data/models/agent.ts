@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt'
 import AgentSchema from '../Schemas/agent'
 import { model } from 'mongoose'
-import { AgentModel as _AgentModel, IAgent } from '../../controllers/helper/interface'
+import { accountStatus, AgentModel as _AgentModel, IAgent } from '../../controllers/helper/interface'
 // import { ObjectId } from 'mongodb'
 
 const saltRounds = 10
@@ -69,6 +69,29 @@ AgentSchema.methods.updateBankInfo = async function (Obj: any) {
 AgentSchema.methods.updateBusinessInfo = async function (obj: any) {
   const { email, address, website, logo, businessName, taxNumber } = obj
   await this.updateOne({ email, address, website, logo, businessName, taxNumber })
+}
+
+AgentSchema.methods.resetPassword = async function (oldPassword: string, newPassword: string) {
+  const result = await bcrypt.compare(oldPassword, this.password)
+  if (result) {
+    let encryptedPassword = await bcrypt.hash(newPassword, saltRounds)
+    await this.updateOne({ password: encryptedPassword })
+    return true
+  }
+  return false
+}
+
+AgentSchema.methods.changeAccountStatus = async function (status: accountStatus) {
+  switch (status) {
+    case "active":
+      await this.updateOne({ status })
+      break;
+    case "blocked":
+      await this.updateOne({ status })
+      break;
+    default:
+      throw new Error('status should be either active or blocked')
+  }
 }
 
 const AgentModel = model<IAgent, _AgentModel>('agent', AgentSchema)

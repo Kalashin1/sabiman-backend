@@ -35,6 +35,15 @@ AdminSchema.statics.login = async function (username: string, password: string) 
   throw Error('incorrect phone number, no user exists with this phone number')
 }
 
+AdminSchema.methods.resetPassword = async function (oldPassword: string, newPassword: string) {
+  const result = await bcrypt.compare(oldPassword, this.password)
+  if (result) {
+    let encryptedPassword = await bcrypt.hash(newPassword, saltRounds)
+    await this.updateOne({ password: encryptedPassword })
+    return true
+  }
+  return false
+}
 
 const AdminModel = model<IAdmin, _AdminModel>('admin', AdminSchema)
 

@@ -5,7 +5,8 @@ import {
   getAllRequests,
   getRequest,
   editRequest,
-  deleteRequest
+  deleteRequest,
+  assignAgent
 } from '../controllers/request/request'
 
 import { createRating, agentRating, getRatings, getRating } from '../controllers/request/rating'
@@ -21,6 +22,10 @@ router.get('/request/:id', getRequest)
 router.patch('/request/:id', editRequest)
 
 router.delete('/request/:id', deleteRequest)
+
+router.put('/request/:id/:agentId', assignAgent)
+
+
 
 router.post('/rating', createRating)
 

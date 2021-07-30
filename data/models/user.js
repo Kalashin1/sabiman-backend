@@ -114,5 +114,53 @@ user_1["default"].statics.editProfile = function (_id, obj) {
         });
     });
 };
+user_1["default"].methods.resetPassword = function (oldPassword, newPassword) {
+    return __awaiter(this, void 0, void 0, function () {
+        var result, encryptedPassword;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, bcrypt.compare(oldPassword, this.password)];
+                case 1:
+                    result = _a.sent();
+                    if (!result) return [3 /*break*/, 4];
+                    return [4 /*yield*/, bcrypt.hash(newPassword, saltRounds)];
+                case 2:
+                    encryptedPassword = _a.sent();
+                    return [4 /*yield*/, this.updateOne({ password: encryptedPassword })];
+                case 3:
+                    _a.sent();
+                    return [2 /*return*/, true];
+                case 4: return [2 /*return*/, false];
+            }
+        });
+    });
+};
+user_1["default"].methods.changeAccountStatus = function (status) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    console.log(status);
+                    _a = status;
+                    switch (_a) {
+                        case "active": return [3 /*break*/, 1];
+                        case "blocked": return [3 /*break*/, 3];
+                    }
+                    return [3 /*break*/, 5];
+                case 1: return [4 /*yield*/, this.updateOne({ status: status })];
+                case 2:
+                    _b.sent();
+                    return [3 /*break*/, 6];
+                case 3: return [4 /*yield*/, this.updateOne({ status: status })];
+                case 4:
+                    _b.sent();
+                    return [3 /*break*/, 6];
+                case 5: throw new Error('status should be either active or blocked');
+                case 6: return [2 /*return*/];
+            }
+        });
+    });
+};
 var userModel = mongoose.model('user', user_1["default"]);
 exports["default"] = userModel;

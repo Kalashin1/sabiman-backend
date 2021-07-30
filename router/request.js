@@ -9,6 +9,7 @@ router.get('/requests', request_1.getAllRequests);
 router.get('/request/:id', request_1.getRequest);
 router.patch('/request/:id', request_1.editRequest);
 router["delete"]('/request/:id', request_1.deleteRequest);
+router.put('/request/:id/:agentId', request_1.assignAgent);
 router.post('/rating', rating_1.createRating);
 router.patch('/rating/:id', rating_1.agentRating);
 router.get('/rating', rating_1.getRatings);

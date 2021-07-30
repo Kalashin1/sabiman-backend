@@ -10,7 +10,7 @@ import {
  } from '../controllers/auth/auth-cont'
 
 
-import {  editProfile } from '../controllers/user/user'
+import {  changeAccountStatus, editProfile, resetPassword } from '../controllers/user/user'
 
  // validating and obtaining user modules
  import { validateUser as _validateUser } from '../controllers/auth/validate-user'
@@ -44,7 +44,8 @@ router.get('/', (_req: express.Request, res: express.Response) => {
 router.post('/dashboard/profile', editProfile)
 
 
+router.post('/resetpassword/user/:id', resetPassword)
 
-
+router.post('/changestatus/user/:id/:status', changeAccountStatus)
 
 export { router }

@@ -7,7 +7,7 @@ import {
 } from '../controllers/agent/auth'
 
 import {
-  AddService, removeServices, updateBankInfo, updateBusinessInfo
+  AddService, removeServices, updateBankInfo, updateBusinessInfo, resetPassword, changeAccountStatus
 } from '../controllers/agent/agent'
 
 import { validateAgent as _validateAgent, getAgent} from '../controllers/agent/validate-agent'
@@ -29,3 +29,7 @@ router.delete('/agent/add-service/:id/:serviceId', removeServices)
 router.patch('/agent/bankinfo/:id', updateBankInfo)
 
 router.patch('/agent/businessinfo/:id', updateBusinessInfo)
+
+router.patch('/agent/resetpassword/:id', resetPassword)
+
+router.patch('/agent/changestatus/:id/:status', changeAccountStatus)

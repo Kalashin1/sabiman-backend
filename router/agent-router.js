@@ -14,3 +14,5 @@ exports.router.post('/agent/add-service/:id/:serviceId', agent_1.AddService);
 exports.router["delete"]('/agent/add-service/:id/:serviceId', agent_1.removeServices);
 exports.router.patch('/agent/bankinfo/:id', agent_1.updateBankInfo);
 exports.router.patch('/agent/businessinfo/:id', agent_1.updateBusinessInfo);
+exports.router.patch('/agent/resetpassword/:id', agent_1.resetPassword);
+exports.router.patch('/agent/changestatus/:id/:status', agent_1.changeAccountStatus);
